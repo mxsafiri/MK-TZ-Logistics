@@ -1,11 +1,11 @@
 const metadata = {
-  title: 'Mevolut | Simple B2C Fintech for your Money',
+  title: 'MK-TZ Logistics OS | Smart Logistics Management',
   description:
-    'Manage your money the easy way with Mevolut. Track expenses, send money, and grow your savings – safely and simply. Sign up free today!',
-  domain: 'pageai.pro',
+    'MK-TZ Logistics OS — a premium logistics management dashboard for tracking orders, fleet, revenue, and payments across your supply chain.',
+  domain: 'mk-tz-logistics.com',
   logoTitle: '',
-  businessName: 'Mevolut',
-  siteUrl: 'https://pageai.pro',
+  businessName: 'MK-TZ Logistics',
+  siteUrl: 'https://mk-tz-logistics.com',
   siteRepo: '',
   socialBanner: '/api/og',
   supportEmail: '',
@@ -19,9 +19,9 @@ const metadata = {
   facebook: '',
   threads: '',
   mastodon: '',
-  author: 'Mevolut',
+  author: 'MK-TZ Logistics',
   language: 'en-us',
-  theme: 'light',
+  theme: 'dark',
   locale: 'en-US',
 };
 

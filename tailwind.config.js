@@ -50,6 +50,17 @@ module.exports = {
           800: customColors.secondary.dark,
           900: customColors.secondary.darker,
         },
+        navy: {
+          900: '#0B0F1A',
+          800: '#111827',
+          700: '#1E293B',
+        },
+        status: {
+          success: '#22C55E',
+          warning: '#F59E0B',
+          danger: '#EF4444',
+          info: '#3B82F6',
+        },
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: customColors.primary.dark,
@@ -75,6 +86,16 @@ module.exports = {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
         },
+      },
+      boxShadow: {
+        soft: '0 10px 30px rgba(0,0,0,0.25)',
+        glow: '0 0 20px rgba(124,58,237,0.35)',
+        'glow-sm': '0 0 10px rgba(124,58,237,0.2)',
+      },
+      borderRadius: {
+        card: '1rem',
+        button: '0.75rem',
+        pill: '9999px',
       },
       typography: ({ theme }) => ({
         DEFAULT: {
