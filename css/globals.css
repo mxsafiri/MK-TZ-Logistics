@@ -29,23 +29,23 @@
   }
 
   .dark {
-    --background: 228 54% 5%;
+    --background: 230 40% 4%;
     --foreground: 220 13% 91%;
-    --card: 224 47% 9%;
+    --card: 228 30% 8%;
     --card-foreground: 220 13% 91%;
-    --popover: 224 47% 9%;
+    --popover: 228 30% 8%;
     --popover-foreground: 220 13% 91%;
     --primary-foreground: 0 0% 100%;
     --secondary: 199 89% 48%;
     --secondary-foreground: 0 0% 100%;
-    --muted: 224 47% 14%;
-    --muted-foreground: 218 11% 65%;
-    --accent: 224 47% 14%;
+    --muted: 228 25% 12%;
+    --muted-foreground: 218 11% 55%;
+    --accent: 228 25% 12%;
     --accent-foreground: 220 13% 91%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 85.7% 97.3%;
-    --border: 224 47% 14%;
-    --input: 224 47% 14%;
+    --border: 228 20% 16%;
+    --input: 228 20% 16%;
   }
 
   *,
@@ -65,6 +65,139 @@
 }
 
 @layer utilities {
+  /* Dashboard surface — theme-aware backgrounds */
+  .dashboard-surface {
+    background: #F8FAFC;
+    background-image: radial-gradient(
+      ellipse at top,
+      rgba(124, 58, 237, 0.06),
+      transparent 50%
+    );
+  }
+
+  .dark .dashboard-surface {
+    background: #060816;
+    background-image: radial-gradient(
+      ellipse at top,
+      rgba(124, 58, 237, 0.04),
+      transparent 50%
+    );
+  }
+
+  /* Liquid glass card */
+  .glass-card {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .glass-card:hover {
+    border-color: rgba(124, 58, 237, 0.2);
+    box-shadow: 0 0 20px rgba(124, 58, 237, 0.08);
+  }
+
+  .dark .glass-card {
+    background: rgba(255, 255, 255, 0.03);
+    border-color: rgba(255, 255, 255, 0.06);
+    box-shadow: none;
+  }
+
+  .dark .glass-card:hover {
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 20px rgba(124, 58, 237, 0.08);
+  }
+
+  /* Sidebar glass */
+  .glass-sidebar {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border-right: 1px solid rgba(15, 23, 42, 0.08);
+  }
+
+  .dark .glass-sidebar {
+    background: rgba(8, 10, 25, 0.85);
+    border-right-color: rgba(255, 255, 255, 0.06);
+  }
+
+  /* Topbar glass */
+  .glass-topbar {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+  }
+
+  .dark .glass-topbar {
+    background: rgba(8, 10, 25, 0.6);
+    border-bottom-color: rgba(255, 255, 255, 0.06);
+  }
+
+  /* Active nav glow */
+  .nav-glow {
+    background: linear-gradient(
+      135deg,
+      rgba(124, 58, 237, 0.1) 0%,
+      rgba(14, 165, 233, 0.06) 100%
+    );
+    border: 1px solid rgba(124, 58, 237, 0.25);
+    box-shadow: 0 0 12px rgba(124, 58, 237, 0.12);
+  }
+
+  .dark .nav-glow {
+    background: linear-gradient(
+      135deg,
+      rgba(124, 58, 237, 0.15) 0%,
+      rgba(14, 165, 233, 0.1) 100%
+    );
+    border-color: rgba(124, 58, 237, 0.2);
+    box-shadow: 0 0 12px rgba(124, 58, 237, 0.15);
+  }
+
+  /* Inner glow for icon containers */
+  .icon-glow-purple {
+    background: rgba(124, 58, 237, 0.1);
+    box-shadow: 0 0 10px rgba(124, 58, 237, 0.15);
+  }
+
+  .dark .icon-glow-purple {
+    background: rgba(124, 58, 237, 0.15);
+    box-shadow: 0 0 10px rgba(124, 58, 237, 0.2);
+  }
+
+  .icon-glow-sky {
+    background: rgba(14, 165, 233, 0.1);
+    box-shadow: 0 0 10px rgba(14, 165, 233, 0.15);
+  }
+
+  .dark .icon-glow-sky {
+    background: rgba(14, 165, 233, 0.15);
+    box-shadow: 0 0 10px rgba(14, 165, 233, 0.2);
+  }
+
+  .icon-glow-green {
+    background: rgba(34, 197, 94, 0.1);
+    box-shadow: 0 0 10px rgba(34, 197, 94, 0.15);
+  }
+
+  .dark .icon-glow-green {
+    background: rgba(34, 197, 94, 0.15);
+    box-shadow: 0 0 10px rgba(34, 197, 94, 0.2);
+  }
+
+  .icon-glow-amber {
+    background: rgba(245, 158, 11, 0.1);
+    box-shadow: 0 0 10px rgba(245, 158, 11, 0.15);
+  }
+
+  .dark .icon-glow-amber {
+    background: rgba(245, 158, 11, 0.15);
+    box-shadow: 0 0 10px rgba(245, 158, 11, 0.2);
+  }
+
   .perspective-none {
     transform: none;
   }

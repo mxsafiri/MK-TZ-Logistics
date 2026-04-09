@@ -5,9 +5,6 @@ import Link from 'next/link';
 import { ChevronRight } from 'lucide-react';
 import { Button } from '@/components/shared/ui/button';
 import { AnimatedGroup } from '@/components/shared/ui/animated-group';
-import { cn } from '@/lib/utils';
-import { useScroll } from 'motion/react';
-import { ThemeSwitch } from '@/components/shared/ThemeSwitch';
 
 const transitionVariants = {
   item: {
@@ -32,7 +29,6 @@ const transitionVariants = {
 export function HeroSection() {
   return (
     <>
-      <HeroHeader />
       <main className="overflow-hidden">
         <section>
           <div className="relative pt-24">
@@ -53,7 +49,7 @@ export function HeroSection() {
                   }}
                 >
                   <h1 className="mt-8 max-w-2xl text-balance text-5xl font-medium md:text-6xl lg:mt-16">
-                    Cross-border logistics between Kenya and Tanzania, simplified
+                    Cross-border logistics simplified
                   </h1>
                   <p className="mt-8 max-w-2xl text-pretty text-lg">
                     MK-TZ Logistics OS gives you full visibility over your
@@ -215,48 +211,3 @@ export function HeroSection() {
     </>
   );
 }
-
-export const HeroHeader = () => {
-  const [scrolled, setScrolled] = React.useState(false);
-  const { scrollYProgress } = useScroll();
-
-  React.useEffect(() => {
-    const unsubscribe = scrollYProgress.on('change', (latest) => {
-      setScrolled(latest > 0.05);
-    });
-    return () => unsubscribe();
-  }, [scrollYProgress]);
-
-  return (
-    <header>
-      <nav
-        className={cn(
-          'fixed z-20 w-full border-b border-transparent transition-all duration-200',
-          scrolled && 'border-border bg-background/80 backdrop-blur-xl',
-        )}
-      >
-        <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
-          <Link
-            href="/"
-            aria-label="home"
-            className="flex items-center gap-2"
-          >
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-primary-500 to-secondary-500 text-sm font-bold text-white">
-              M
-            </div>
-            <span className="text-base font-semibold">MK-TZ Logistics</span>
-          </Link>
-
-          <div className="flex items-center gap-3">
-            <ThemeSwitch />
-            <Button asChild size="sm">
-              <Link href="/dashboard">
-                <span>Get Started</span>
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </nav>
-    </header>
-  );
-};
