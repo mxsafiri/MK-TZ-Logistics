@@ -1,9 +1,14 @@
 import Link from 'next/link';
+import { Suspense } from 'react';
 import { SignInForm } from './sign-in-form';
 
 export const metadata = {
   title: 'Sign in',
 };
+
+// useSearchParams in the form forces this route to opt out of static
+// prerendering. Marking dynamic + wrapping in Suspense satisfies Next 15.
+export const dynamic = 'force-dynamic';
 
 export default function SignInPage() {
   return (
@@ -15,7 +20,9 @@ export default function SignInPage() {
             Welcome back. Enter your credentials to access your dashboard.
           </p>
         </div>
-        <SignInForm />
+        <Suspense fallback={null}>
+          <SignInForm />
+        </Suspense>
         <p className="text-sm text-center text-muted-foreground">
           Don&apos;t have an account?{' '}
           <Link href="/auth/sign-up" className="font-medium text-primary hover:underline">
