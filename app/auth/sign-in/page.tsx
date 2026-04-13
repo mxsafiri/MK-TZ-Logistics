@@ -6,8 +6,6 @@ export const metadata = {
   title: 'Sign in',
 };
 
-// useSearchParams in the form forces this route to opt out of static
-// prerendering. Marking dynamic + wrapping in Suspense satisfies Next 15.
 export const dynamic = 'force-dynamic';
 
 export default function SignInPage() {

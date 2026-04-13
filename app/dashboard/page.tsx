@@ -10,6 +10,8 @@ import { requireSession } from '@/lib/auth/session';
 import {
   currentMonthRange,
   getDashboardKpis,
+  getDailyRevenue,
+  getMonthlyTripCounts,
   getFleetCounts,
   getRecentTrips,
   getPaymentSummary,
@@ -35,13 +37,16 @@ export default async function DashboardPage() {
 
   // Fetch everything in parallel — all queries are scoped by orgId so each one
   // is independent. React will render once all promises resolve.
-  const [kpis, fleet, trips, paymentSummary, carriers] = await Promise.all([
-    getDashboardKpis({ orgId: session.orgId, ...range }),
-    getFleetCounts(session.orgId),
-    getRecentTrips({ orgId: session.orgId, limit: 15 }),
-    getPaymentSummary({ orgId: session.orgId, ...range }),
-    getCarrierBreakdown({ orgId: session.orgId, ...range }),
-  ]);
+  const [kpis, fleet, trips, paymentSummary, carriers, dailyRevenue, monthlyTrips] =
+    await Promise.all([
+      getDashboardKpis({ orgId: session.orgId, ...range }),
+      getFleetCounts(session.orgId),
+      getRecentTrips({ orgId: session.orgId, limit: 15 }),
+      getPaymentSummary({ orgId: session.orgId, ...range }),
+      getCarrierBreakdown({ orgId: session.orgId, ...range }),
+      getDailyRevenue({ orgId: session.orgId, ...range }),
+      getMonthlyTripCounts(session.orgId),
+    ]);
 
   const user = {
     name: session.displayName ?? session.email,
@@ -87,10 +92,10 @@ export default async function DashboardPage() {
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
         <div className="lg:col-span-7">
-          <RevenueChart />
+          <RevenueChart data={dailyRevenue} baseCurrency={baseCurrency} />
         </div>
         <div className="lg:col-span-5">
-          <OrdersChart />
+          <OrdersChart data={monthlyTrips} />
         </div>
       </div>
 

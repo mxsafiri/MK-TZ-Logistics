@@ -217,6 +217,64 @@ export async function getCarrierBreakdown({
 }
 
 /**
+ * Daily revenue for the current month — drives the RevenueChart bar chart.
+ * Returns an array of { day, revenueBaseMinor, advanceBaseMinor } objects.
+ */
+export async function getDailyRevenue({ orgId, from, to }: DashboardRange) {
+  const rows = await db
+    .select({
+      day: trips.tripDate,
+      revenueBaseMinor: sql<string>`coalesce(sum((${trips.totalMinor})::numeric * ${trips.fxRateToBase}), 0)::bigint::text`,
+      advanceBaseMinor: sql<string>`coalesce(sum((${trips.freightAdvanceMinor})::numeric * ${trips.fxRateToBase}), 0)::bigint::text`,
+    })
+    .from(trips)
+    .where(
+      and(
+        eq(trips.orgId, orgId),
+        gte(trips.tripDate, from.toISOString().slice(0, 10)),
+        lte(trips.tripDate, to.toISOString().slice(0, 10)),
+      ),
+    )
+    .groupBy(trips.tripDate)
+    .orderBy(trips.tripDate);
+
+  return rows.map((r) => ({
+    day: r.day,
+    revenue: Number(BigInt(r.revenueBaseMinor)),
+    advance: Number(BigInt(r.advanceBaseMinor)),
+  }));
+}
+
+/**
+ * Monthly trip counts for the past 12 months — drives the OrdersChart.
+ */
+export async function getMonthlyTripCounts(orgId: string) {
+  const twelveMonthsAgo = new Date();
+  twelveMonthsAgo.setMonth(twelveMonthsAgo.getMonth() - 11);
+  twelveMonthsAgo.setDate(1);
+
+  const rows = await db
+    .select({
+      month: sql<string>`to_char(${trips.tripDate}::date, 'YYYY-MM')`,
+      count: sql<number>`count(*)::int`,
+    })
+    .from(trips)
+    .where(
+      and(
+        eq(trips.orgId, orgId),
+        gte(trips.tripDate, twelveMonthsAgo.toISOString().slice(0, 10)),
+      ),
+    )
+    .groupBy(sql`to_char(${trips.tripDate}::date, 'YYYY-MM')`)
+    .orderBy(sql`to_char(${trips.tripDate}::date, 'YYYY-MM')`);
+
+  return rows.map((r) => ({
+    month: r.month,
+    count: r.count,
+  }));
+}
+
+/**
  * Current month range — helper for the default dashboard window.
  */
 export function currentMonthRange(): { from: Date; to: Date } {

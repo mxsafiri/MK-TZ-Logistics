@@ -114,7 +114,9 @@ export function TripsTable({ trips }: TripsTableProps) {
                 className="border-b border-border/50 transition-colors hover:bg-foreground/[0.03]"
               >
                 <td className="px-4 py-3 text-xs text-foreground">
-                  {formatDate(trip.tripDate)}
+                  <Link href={`/dashboard/trips/${trip.id}`} className="hover:underline">
+                    {formatDate(trip.tripDate)}
+                  </Link>
                 </td>
                 <td className="px-4 py-3 text-xs font-medium text-foreground">
                   {trip.truckPlate ?? '—'}
