@@ -18,8 +18,4 @@ export const auth = createNeonAuth({
   cookies: {
     secret: env.NEON_AUTH_COOKIE_SECRET,
   },
-  trustedOrigins: [
-    env.NEXT_PUBLIC_APP_URL,
-    'https://mk-tz-logistics.vercel.app',
-  ],
 });
