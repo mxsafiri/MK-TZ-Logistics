@@ -48,6 +48,46 @@ export async function listActiveRoutes(orgId: string) {
     .orderBy(asc(routes.origin));
 }
 
+/**
+ * All trucks for the given org (active and inactive), ordered by plate number.
+ * Used on the fleet management page.
+ */
+export async function listAllTrucks(orgId: string) {
+  return db
+    .select({
+      id: trucks.id,
+      plateNumber: trucks.plateNumber,
+      make: trucks.make,
+      model: trucks.model,
+      capacityKg: trucks.capacityKg,
+      vehicleType: trucks.vehicleType,
+      active: trucks.active,
+      createdAt: trucks.createdAt,
+    })
+    .from(trucks)
+    .where(eq(trucks.orgId, orgId))
+    .orderBy(asc(trucks.plateNumber));
+}
+
+/**
+ * All drivers for the given org (active and inactive), ordered by name.
+ * Used on the fleet management page.
+ */
+export async function listAllDrivers(orgId: string) {
+  return db
+    .select({
+      id: drivers.id,
+      name: drivers.name,
+      phone: drivers.phone,
+      licenseNo: drivers.licenseNo,
+      active: drivers.active,
+      createdAt: drivers.createdAt,
+    })
+    .from(drivers)
+    .where(eq(drivers.orgId, orgId))
+    .orderBy(asc(drivers.name));
+}
+
 export async function listActiveClients(orgId: string) {
   return db
     .select({

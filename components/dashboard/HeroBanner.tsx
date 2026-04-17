@@ -38,7 +38,7 @@ export function HeroBanner() {
             </p>
           </div>
           <Link
-            href="/dashboard"
+            href="/dashboard/fleet"
             className="group flex shrink-0 items-center gap-2 rounded-xl bg-gradient-to-r from-primary-500 to-primary-600 px-6 py-3 text-sm font-semibold text-white transition-all duration-200 hover:shadow-glow"
           >
             Get Started

@@ -1,38 +1,36 @@
 'use client';
 
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import Image from 'next/image';
 import {
   LayoutDashboardIcon,
   PackageIcon,
   TruckIcon,
   FileTextIcon,
-  ZapIcon,
   BarChart3Icon,
-  ClipboardListIcon,
-  MessageSquareIcon,
+  UsersIcon,
+  SettingsIcon,
   SearchIcon,
   XIcon,
-  ArrowUpRight,
-  SparklesIcon,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 
 const navSections = [
   {
     items: [
-      { label: 'Overview', icon: LayoutDashboardIcon, href: '/dashboard', active: true },
-      { label: 'Orders', icon: PackageIcon, href: '/dashboard' },
-      { label: 'Carriers', icon: TruckIcon, href: '/dashboard' },
-      { label: 'Invoices', icon: FileTextIcon, href: '/dashboard' },
+      { label: 'Overview', icon: LayoutDashboardIcon, href: '/dashboard' },
+      { label: 'Trips', icon: PackageIcon, href: '/dashboard/trips' },
+      { label: 'Fleet', icon: TruckIcon, href: '/dashboard/fleet' },
     ],
   },
   {
-    title: 'Insights',
+    title: 'Manage',
     items: [
-      { label: 'Analytics', icon: BarChart3Icon, href: '/dashboard' },
-      { label: 'Automations', icon: ZapIcon, href: '/dashboard' },
-      { label: 'Reporting', icon: ClipboardListIcon, href: '/dashboard' },
-      { label: 'Messages', icon: MessageSquareIcon, href: '/dashboard' },
+      { label: 'Invoices', icon: FileTextIcon, href: '/dashboard/invoices' },
+      { label: 'Reports', icon: BarChart3Icon, href: '/dashboard/reports' },
+      { label: 'Team', icon: UsersIcon, href: '/dashboard/team' },
+      { label: 'Settings', icon: SettingsIcon, href: '/dashboard/settings' },
     ],
   },
 ];
@@ -43,6 +41,8 @@ interface DashboardSidebarProps {
 }
 
 export function DashboardSidebar({ open, onClose }: DashboardSidebarProps) {
+  const pathname = usePathname();
+
   return (
     <>
       {open && (
@@ -70,8 +70,14 @@ export function DashboardSidebar({ open, onClose }: DashboardSidebarProps) {
 
         {/* Logo */}
         <div className="flex items-center gap-2.5 px-5 py-5">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-primary-500 to-secondary-500 text-sm font-bold text-white shadow-glow-sm">
-            M
+          <div className="relative h-9 w-9 overflow-hidden rounded-full ring-1 ring-border/60">
+            <Image
+              src="/static/images/logo.png"
+              alt="MK-TZ"
+              fill
+              sizes="36px"
+              className="object-cover"
+            />
           </div>
           <span className="text-base font-bold text-foreground">MK-TZ Logistics</span>
         </div>
@@ -98,28 +104,23 @@ export function DashboardSidebar({ open, onClose }: DashboardSidebarProps) {
                 </p>
               )}
               <div className="space-y-0.5">
-                {section.items.map((item) => (
-                  <SidebarItem key={item.label} {...item} />
-                ))}
+                {section.items.map((item) => {
+                  const isActive =
+                    item.href === '/dashboard'
+                      ? pathname === '/dashboard'
+                      : pathname.startsWith(item.href);
+                  return (
+                    <SidebarItem
+                      key={item.label}
+                      {...item}
+                      active={isActive}
+                    />
+                  );
+                })}
               </div>
             </div>
           ))}
         </nav>
-
-        {/* Premium CTA */}
-        <div className="mx-3 mb-4 rounded-xl border border-primary-500/20 bg-gradient-to-br from-primary-500/10 to-secondary-500/5 p-4">
-          <div className="flex items-center gap-2 mb-1">
-            <SparklesIcon className="h-4 w-4 text-primary-500" />
-            <p className="text-sm font-semibold text-foreground">Go Premium</p>
-          </div>
-          <p className="text-xs text-muted-foreground leading-relaxed">
-            Unlock real-time GPS, AI route optimization, and unlimited fleet management.
-          </p>
-          <button className="mt-3 flex w-full items-center justify-center gap-1.5 rounded-lg bg-gradient-to-r from-primary-500 to-secondary-500 py-2 text-sm font-medium text-white transition-all duration-200 hover:shadow-glow">
-            Upgrade
-            <ArrowUpRight className="h-3.5 w-3.5" />
-          </button>
-        </div>
       </aside>
     </>
   );
